@@ -2,12 +2,8 @@
     x:Class="App3.Views.FirstRunDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    x:Uid="FirstRunDialog"
-    d:DesignHeight="345"
-    d:DesignWidth="550"
-    mc:Ignorable="d">
+    x:Uid="FirstRunDialog">
+
     <ContentDialog.TitleTemplate>
         <DataTemplate x:DataType="x:String">
             <StackPanel Orientation="Horizontal">

@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using App3.Core.Helpers;
 using App3.Core.Models;
 using Realms;
 
@@ -10,60 +10,60 @@ namespace App3.Core.Service
     {
         private static IEnumerable<Bookmark> DefaultBookmarks()
         {
-            return new List<Bookmark>()
+            return new List<Bookmark>
             {
                 new Bookmark
                 {
-                    Index = 0,
+                    Id = 1,
                     Title = "Google",
                     Url = "http://www.google.com",
-                    Favicon = GetFavicon("google.com")
+                    Favicon = FaviconHelper.GetFavicon("google.com")
                 },
                 new Bookmark
                 {
-                    Index = 1,
+                    Id = 2,
                     Title = "LinkedIn",
                     Url = "http://www.linkedin.com",
-                    Favicon = GetFavicon("linkedin.com")
+                    Favicon = FaviconHelper.GetFavicon("linkedin.com")
                 },
                 new Bookmark
                 {
-                    Index = 2,
+                    Id = 3,
                     Title = "YouTube",
                     Url = "http://www.youtube.com",
-                    Favicon = GetFavicon("youtube.com")
+                    Favicon = FaviconHelper.GetFavicon("youtube.com")
                 },
                 new Bookmark
                 {
-                    Index = 3,
+                    Id = 4,
                     Title = "FaceBook",
                     Url = "http://www.facebook.com",
-                    Favicon = GetFavicon("facebook.com")
+                    Favicon = FaviconHelper.GetFavicon("facebook.com")
                 },
                 new Bookmark
                 {
-                    Index = 4,
+                    Id = 5,
                     Title = "Twitter",
                     Url = "http://www.twitter.com",
-                    Favicon = GetFavicon("twitter.com")
+                    Favicon = FaviconHelper.GetFavicon("twitter.com")
                 },
                 new Bookmark
                 {
-                    Index = 5,
+                    Id = 6,
                     Title = "Microsoft",
                     Url = "http://www.microsoft.com",
-                    Favicon = GetFavicon("microsoft.com")
+                    Favicon = FaviconHelper.GetFavicon("microsoft.com")
                 },
                 new Bookmark
                 {
-                    Index = 6,
+                    Id = 7,
                     Title = "Github",
                     Url = "http://www.github.com",
-                    Favicon = GetFavicon("github.com")
+                    Favicon = FaviconHelper.GetFavicon("github.com")
                 },
                 new Bookmark
                 {
-                    Index = 999,
+                    Id = 999,
                     Title = "Add",
                     Url = "Add",
                     Favicon = "https://www.pngrepo.com/png/154811/170/thin-add-button.png"
@@ -71,28 +71,24 @@ namespace App3.Core.Service
             };
         }
 
-        public static string GetFavicon(string domain)
-        {
-            return $"https://api.faviconkit.com/{domain}/144";
-        }
-
         public static IEnumerable<Bookmark> GetBookmarksData()
         {
             var realm = Realm.GetInstance();
-            return realm.All<Bookmark>().OrderBy(x => x.Index);
+            return realm.All<Bookmark>().OrderBy(x => x.Id);
         }
 
         public static void AddBookmark(string title, string url)
         {
-            var authority = GetAuthority(url);
+            var authority = FaviconHelper.GetAuthority(url);
             var realm = Realm.GetInstance();
             using (var trans = realm.BeginWrite())
             {
                 var bookmark = new Bookmark
                 {
+                    Id = GetBookmarksData().Count(),
                     Title = title,
                     Url = url,
-                    Favicon = GetFavicon(authority)
+                    Favicon = FaviconHelper.GetFavicon(authority)
                 };
 
                 realm.Add(bookmark);
@@ -113,12 +109,6 @@ namespace App3.Core.Service
                 }
                 trans.Commit();
             }
-        }
-
-        private static string GetAuthority(string url)
-        {
-            var res = Uri.TryCreate(url, UriKind.Absolute, out var dom);
-            return res ? dom.Authority : url;
         }
     }
 }

@@ -147,6 +147,7 @@
     <Compile Include="Helpers\WebHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Constants\PageTokens.cs" />
+    <Compile Include="Services\DialogService.cs" />
     <Compile Include="Services\FirstRunDisplayService.cs" />
     <Compile Include="Services\IFirstRunDisplayService.cs" />
     <Compile Include="Services\IMenuNavigationService.cs" />

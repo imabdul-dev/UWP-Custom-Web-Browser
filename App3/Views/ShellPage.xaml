@@ -1,0 +1,31 @@
+﻿<Page
+    x:Class="App3.Views.ShellPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:prismMvvm="using:Prism.Windows.Mvvm"
+    prismMvvm:ViewModelLocator.AutoWireViewModel="True"
+    Style="{StaticResource PageStyle}">
+
+    <Grid>
+        <SplitView
+            x:Name="splitView"
+            OpenPaneLength="400"
+            PanePlacement="Right">
+            <SplitView.Pane>
+                <Frame
+                    x:Name="rightFrame"
+                    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                    BorderBrush="Gray"
+                    BorderThickness="1,1,0,0" />
+            </SplitView.Pane>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Frame x:Name="shellFrame" />
+                </Grid>
+            </Grid>
+        </SplitView>
+    </Grid>
+</Page>

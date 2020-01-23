@@ -1,0 +1,172 @@
+﻿<Page
+    x:Class="App3.Views.WebViewPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:prismMvvm="using:Prism.Windows.Mvvm"
+    prismMvvm:ViewModelLocator.AutoWireViewModel="True"
+    Style="{StaticResource PageStyle}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid
+            Grid.Row="0"
+            Height="70"
+            VerticalAlignment="Top"
+            Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Button
+                x:Uid="WebView_BrowserBackButton"
+                Grid.Column="0"
+                Height="55"
+                Margin="20,10,10,10"
+                Background="Transparent"
+                Command="{x:Bind ViewModel.BrowserBackCommand, Mode=OneWay}">
+                <Button.Content>
+                    <FontIcon
+                        Width="40"
+                        FontSize="40"
+                        Glyph="&#xE830;" />
+                </Button.Content>
+            </Button>
+            <Button
+                x:Uid="WebView_BrowserForwardButton"
+                Grid.Column="1"
+                Height="55"
+                Margin="10,10,20,10"
+                Background="Transparent"
+                Command="{x:Bind ViewModel.BrowserForwardCommand, Mode=OneWay}">
+                <Button.Content>
+                    <FontIcon
+                        Width="40"
+                        FontSize="40"
+                        Glyph="&#xE72A;" />
+                </Button.Content>
+            </Button>
+            <Button
+                x:Uid="WebView_RefreshBrowserButton"
+                Grid.Column="2"
+                Height="55"
+                Margin="10,10,20,10"
+                Background="Transparent"
+                Command="{x:Bind ViewModel.RefreshCommand}">
+                <Button.Content>
+                    <FontIcon
+                        Width="40"
+                        FontSize="40"
+                        Glyph="&#xE72C;" />
+                </Button.Content>
+            </Button>
+            <Button
+                Grid.Column="3"
+                Height="55"
+                Margin="10,10,20,10"
+                Background="Transparent"
+                Command="{x:Bind ViewModel.MenuViewsBookmarksCommand}">
+                <Button.Content>
+                    <FontIcon
+                        Width="40"
+                        FontSize="40"
+                        Glyph="&#xE80F;" />
+                </Button.Content>
+            </Button>
+            <AutoSuggestBox
+                Grid.Column="4"
+                Margin="5"
+                VerticalContentAlignment="Center"
+                FontSize="30"
+                PlaceholderText="Search or enter web address"
+                Text="{x:Bind ViewModel.Url, Mode=TwoWay}">
+                <AutoSuggestBox.QueryIcon>
+                    <FontIcon FontSize="30" Glyph="&#xE721;" />
+                </AutoSuggestBox.QueryIcon>
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="QuerySubmitted">
+                        <core:InvokeCommandAction Command="{x:Bind ViewModel.SearchTextBoxCommand}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+            </AutoSuggestBox>
+            <Button
+                Grid.Column="5"
+                Height="55"
+                Margin="10,10,20,10"
+                Background="Transparent"
+                Command="{x:Bind ViewModel.AddToBookmarkCommand}">
+                <Button.Content>
+                    <FontIcon
+                        Width="40"
+                        FontSize="40"
+                        Glyph="&#xE728;" />
+                </Button.Content>
+            </Button>
+            <Button
+                Grid.Column="6"
+                Height="55"
+                Margin="10,10,20,10"
+                Background="Transparent">
+                <Button.Content>
+                    <FontIcon
+                        Width="40"
+                        FontSize="40"
+                        Glyph="&#xE712;" />
+                </Button.Content>
+                <Button.Flyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem Text="History">
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xE81C;" />
+                            </MenuFlyoutItem.Icon>
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="H" Modifiers="Control" />
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Command="{x:Bind ViewModel.MenuFileSettingsCommand}" Text="Settings">
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xE713;" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                    </MenuFlyout>
+                </Button.Flyout>
+
+            </Button>
+        </Grid>
+        <StackPanel
+            Grid.Row="1"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Visibility="{x:Bind ViewModel.IsLoadingVisibility, Mode=OneWay}">
+            <ProgressRing IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}" />
+            <TextBlock x:Uid="WebView_Loading" />
+        </StackPanel>
+        <StackPanel
+            Grid.Row="1"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Visibility="{x:Bind ViewModel.FailedMesageVisibility, Mode=OneWay}">
+            <TextBlock
+                x:Uid="WebView_FailedMessage"
+                HorizontalAlignment="Center"
+                TextWrapping="WrapWholeWords" />
+            <HyperlinkButton
+                x:Uid="WebView_Retry"
+                HorizontalAlignment="Center"
+                Command="{x:Bind ViewModel.RetryCommand}" />
+        </StackPanel>
+        <WebView
+            x:Name="webView"
+            Grid.Row="1"
+            Source="{x:Bind ViewModel.Source}" />
+    </Grid>
+</Page>

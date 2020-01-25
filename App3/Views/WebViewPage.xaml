@@ -124,7 +124,7 @@
                 </Button.Content>
                 <Button.Flyout>
                     <MenuFlyout>
-                        <MenuFlyoutItem Text="History">
+                        <MenuFlyoutItem Command="{x:Bind ViewModel.OpenHistoryCommand}" Text="History">
                             <MenuFlyoutItem.Icon>
                                 <FontIcon Glyph="&#xE81C;" />
                             </MenuFlyoutItem.Icon>

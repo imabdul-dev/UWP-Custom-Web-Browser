@@ -1,0 +1,10 @@
+﻿<ContentDialog
+    x:Class="App3.Views.MessageBox"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Notification"
+    PrimaryButtonText="OK">
+
+    <TextBlock Text="Bookmark added!" />
+
+</ContentDialog>

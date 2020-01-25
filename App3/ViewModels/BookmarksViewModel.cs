@@ -10,18 +10,47 @@ using Prism.Windows.Mvvm;
 
 namespace App3.ViewModels
 {
+
     public class BookmarksViewModel : ViewModelBase
     {
-        public DelegateCommand<Bookmark> ItemClickCommand { get; set; }
-        private ObservableCollection<Bookmark> _source;
+        #region Constructor
+
+        public BookmarksViewModel(IEventAggregator eventAggregator, IMenuNavigationService menuNavigationService)
+        {
+            _eventAggregator = eventAggregator;
+            _menuNavigationService = menuNavigationService;
+            Source = new ObservableCollection<Bookmark>();
+            LoadDataAsync();
+            ItemClickCommand = new DelegateCommand<Bookmark>(OnItemClick);
+        }
+
+        #endregion
+
+        #region Properties
+
         private readonly IEventAggregator _eventAggregator;
         private readonly IMenuNavigationService _menuNavigationService;
 
+        #endregion
+
+        #region Fields
+
+        private ObservableCollection<Bookmark> _source;
         public ObservableCollection<Bookmark> Source
         {
             get => _source;
             set { SetProperty(ref _source, value); }
         }
+
+        #endregion
+
+        #region Commands
+
+        public DelegateCommand<Bookmark> ItemClickCommand { get; set; }
+
+        #endregion
+
+        #region Methods
 
         private void OnItemClick(Bookmark clickedItem)
         {
@@ -39,23 +68,15 @@ namespace App3.ViewModels
             }
         }
 
-        public BookmarksViewModel(IEventAggregator eventAggregator, IMenuNavigationService menuNavigationService)
-        {
-            _eventAggregator = eventAggregator;
-            _menuNavigationService = menuNavigationService;
-            Source = new ObservableCollection<Bookmark>();
-            LoadDataAsync();
-            ItemClickCommand = new DelegateCommand<Bookmark>(OnItemClick);
-        }
-
         public void LoadDataAsync()
         {
-            // TODO WTS: Replace this with your actual data
             var data = BookmarkDataService.GetBookmarksData();
             foreach (var item in data)
             {
                 Source.Add(item);
             }
         }
+
+        #endregion
     }
 }

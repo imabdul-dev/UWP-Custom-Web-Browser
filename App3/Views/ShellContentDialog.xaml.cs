@@ -1,14 +1,11 @@
 ﻿using System;
-
 using App3.ViewModels;
-
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 
 namespace App3.Views
 {
-    public sealed partial class ShellContentDialog : ContentDialog
+    public sealed partial class ShellContentDialog
     {
         public ShellContentDialogViewModel ViewModel { get; } = new ShellContentDialogViewModel();
 

@@ -10,8 +10,9 @@ namespace App3.ViewModels
 {
     public class SettingsViewModel : ViewModelBase
     {
-        private ElementTheme _elementTheme = ThemeSelectorService.Theme;
+        #region Fields  
 
+        private ElementTheme _elementTheme = ThemeSelectorService.Theme;
         public ElementTheme ElementTheme
         {
             get { return _elementTheme; }
@@ -20,7 +21,6 @@ namespace App3.ViewModels
         }
 
         private string _versionDescription;
-
         public string VersionDescription
         {
             get { return _versionDescription; }
@@ -29,7 +29,6 @@ namespace App3.ViewModels
         }
 
         private DelegateCommand<object> _switchThemeCommand;
-
         public DelegateCommand<object> SwitchThemeCommand
         {
             get
@@ -37,11 +36,16 @@ namespace App3.ViewModels
                 return _switchThemeCommand ?? (_switchThemeCommand = new DelegateCommand<object>(
                            async (param) =>
                            {
-                               ElementTheme = (ElementTheme) param;
-                               await ThemeSelectorService.SetThemeAsync((ElementTheme) param);
+                               ElementTheme = (ElementTheme)param;
+                               await ThemeSelectorService.SetThemeAsync((ElementTheme)param);
                            }));
             }
         }
+
+
+        #endregion
+
+        #region Methods
 
         public async Task InitializeAsync()
         {
@@ -58,5 +62,7 @@ namespace App3.ViewModels
 
             return $"{appName} - {version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
         }
+
+        #endregion
     }
 }

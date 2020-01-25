@@ -9,19 +9,24 @@ namespace App3.Core.Service
 {
     public static class HistoryDataService
     {
-        public static void AddorUpdateHistoryItem(History history)
+        public static void AddorUpdateHistoryItem(string title, string url)
         {
             var realm = Realm.GetInstance();
-            var item = realm.Find<History>(history.Id);
+
+            var item = realm.All<History>().FirstOrDefault(x => x.Title == title && x.Url == url);
             using (var trans = realm.BeginWrite())
             {
                 if (item == null)
                 {
-                    var auth = FaviconHelper.GetAuthority(item.Url);
+                    var auth = FaviconHelper.GetAuthority(url);
                     var fav = FaviconHelper.GetFavicon(auth);
-                    item.Id = GetHistoryData().Count() + 1;
-                    item.Favicon = fav;
-                    item.Visted = DateTime.Now.ToString("D");
+                    item = new History
+                    {
+                        Id = GetHistoryData().Count() + 1,
+                        Title = title,
+                        Favicon = fav,
+                        Visted = "Visited: " + DateTime.Now.ToString("D")
+                    };
 
                     realm.Add(item);
                 }

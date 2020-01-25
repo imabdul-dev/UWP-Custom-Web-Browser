@@ -12,6 +12,7 @@ using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using App3.Constants;
+using Realms;
 
 namespace App3
 {
@@ -29,6 +30,7 @@ namespace App3
             base.ConfigureContainer();
             Container.RegisterType<IFirstRunDisplayService, FirstRunDisplayService>(new ContainerControlledLifetimeManager());
             Container.RegisterInstance<IResourceLoader>(new ResourceLoaderAdapter(new ResourceLoader()));
+            Container.RegisterType<IDialogService, DialogService>();
             Container.RegisterType<IMenuNavigationService, MenuNavigationService>();
             Container.RegisterType<IWebViewService, WebViewService>();
         }

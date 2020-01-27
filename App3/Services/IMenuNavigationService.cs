@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 
-namespace App3.Services
+namespace UWPBrowser.Services
 {
     public interface IMenuNavigationService
     {

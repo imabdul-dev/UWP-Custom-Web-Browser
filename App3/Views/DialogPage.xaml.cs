@@ -1,6 +1,6 @@
-﻿using App3.ViewModels;
+﻿using UWPBrowser.ViewModels;
 
-namespace App3.Views
+namespace UWPBrowser.Views
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.

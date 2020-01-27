@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Threading.Tasks;
-using App3.Views;
-using Microsoft.Toolkit.Uwp.Helpers;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using App3.Core.Service;
+using Microsoft.Toolkit.Uwp.Helpers;
+using UWPBrowser.Views;
 
-namespace App3.Services
+namespace UWPBrowser.Services
 {
-    public class FirstRunDisplayService : IFirstRunDisplayService
+    public class FirstRunService : IFirstRunService
     {
         private static bool shown;
 
-        public async Task ShowIfAppropriateAsync()
+        public async Task RunIfAppropriateAsync()
         {
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
                 CoreDispatcherPriority.Normal, async () =>
@@ -20,8 +20,8 @@ namespace App3.Services
                     if (SystemInformation.IsFirstRun && !shown)
                     {
                         shown = true;
-                        BookmarkDataService.AddBookmarks();
                         var dialog = new FirstRunDialog();
+                        BookmarkDataService.AddBookmarks();
                         await dialog.ShowAsync();
                     }
                 });

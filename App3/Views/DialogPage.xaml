@@ -1,5 +1,5 @@
 ﻿<ContentDialog
-    x:Class="App3.Views.DialogPage"
+    x:Class="UWPBrowser.Views.DialogPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
@@ -7,7 +7,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     PrimaryButtonText="Ok">
 
-    <Grid Height="800">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -21,7 +21,7 @@
             Text="Options" />
         <controls:TabView Grid.Row="1">
             <controls:TabViewItem Header="History">
-                <ListView MinHeight="750" ItemsSource="{x:Bind ViewModel.HistoryCollection}">
+                <ListView ItemsSource="{x:Bind ViewModel.HistoryCollection}">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="models:History">
                             <StackPanel Height="64" Orientation="Horizontal">

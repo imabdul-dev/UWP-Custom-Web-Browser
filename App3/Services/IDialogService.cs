@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace App3.Services
+namespace UWPBrowser.Services
 {
     public interface IDialogService
     {

@@ -1,13 +1,13 @@
-﻿using App3.Services;
-using App3.Views;
-using Prism.Commands;
-using Prism.Windows.Mvvm;
-using Windows.UI.Xaml.Controls;
-using App3.Constants;
+﻿using Windows.UI.Xaml.Controls;
 using App3.Core.Events;
+using Prism.Commands;
 using Prism.Events;
+using Prism.Windows.Mvvm;
+using UWPBrowser.Constants;
+using UWPBrowser.Services;
+using UWPBrowser.Views;
 
-namespace App3.ViewModels
+namespace UWPBrowser.ViewModels
 {
     public class ShellViewModel : ViewModelBase
     {

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using App3.Views;
-using Prism.Windows.Navigation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
+using Prism.Windows.Navigation;
+using UWPBrowser.Views;
 
-namespace App3.Services
+namespace UWPBrowser.Services
 {
     public class MenuNavigationService : IMenuNavigationService
     {

@@ -1,18 +1,17 @@
 ﻿using System;
-using Windows.UI.Core;
-using App3.Services;
-using Prism.Commands;
-using Prism.Windows.Mvvm;
+using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using App3.Constants;
 using App3.Core.Events;
 using App3.Core.Models;
 using App3.Core.Service;
-using App3.Helpers;
+using Prism.Commands;
 using Prism.Events;
+using Prism.Windows.Mvvm;
+using UWPBrowser.Helpers;
+using UWPBrowser.Services;
 
-namespace App3.ViewModels
+namespace UWPBrowser.ViewModels
 {
     public class WebViewViewModel : ViewModelBase
     {
@@ -20,11 +19,14 @@ namespace App3.ViewModels
 
         public WebViewViewModel(IMenuNavigationService menuNavigationService, IEventAggregator eventAggregator, IDialogService dialogService)
         {
+            BookmarksVisibility = Visibility.Collapsed;
+            WebViewVisibility = Visibility.Visible;
             _menuNavigationService = menuNavigationService;
             _eventAggregator = eventAggregator;
             _dialogService = dialogService;
             IsLoading = true;
-            Source = new Uri(WebHelper.Url);
+            Bookmarks = new ObservableCollection<Bookmark>();
+            WebViewSource = new Uri(WebHelper.Url);
             BrowserBackCommand = new DelegateCommand(() => _webViewService?.GoBack(), () => _webViewService?.CanGoBack ?? false);
             BrowserForwardCommand = new DelegateCommand(() => _webViewService?.GoForward(), () => _webViewService?.CanGoForward ?? false);
             RefreshCommand = new DelegateCommand(() => _webViewService?.Refresh());
@@ -34,7 +36,8 @@ namespace App3.ViewModels
             AddToBookmarkCommand = new DelegateCommand(AddToBookmarkCommand_);
             MenuFileSettingsCommand = new DelegateCommand(OnMenuFileSettings);
             OpenHistoryCommand = new DelegateCommand(OpenHistoryCommand_);
-            eventAggregator.GetEvent<OpenBookmarkEvent>().Subscribe(OpenBookmarkEvent_);
+            ItemClickCommand = new DelegateCommand<Bookmark>(ItemClickCommand_);
+            LoadBookmarks();
 
             // Note that the WebViewService is set from within the view because it needs a reference to the WebView control
         }
@@ -58,11 +61,11 @@ namespace App3.ViewModels
             set { SetProperty(ref _url, value); }
         }
 
-        private Uri _source;
-        public Uri Source
+        private Uri _webViewsource;
+        public Uri WebViewSource
         {
-            get { return _source; }
-            set { SetProperty(ref _source, value); }
+            get { return _webViewsource; }
+            set { SetProperty(ref _webViewsource, value); }
         }
 
         private bool _isLoading;
@@ -133,6 +136,34 @@ namespace App3.ViewModels
             }
         }
 
+        private Visibility _bookmarksVisibility;
+        public Visibility BookmarksVisibility
+        {
+            get
+            {
+                return _bookmarksVisibility;
+            }
+
+            set
+            {
+                SetProperty(ref _bookmarksVisibility, value);
+            }
+        }
+
+        private Visibility _webViewVisibility;
+        public Visibility WebViewVisibility
+        {
+            get
+            {
+                return _webViewVisibility;
+            }
+
+            set
+            {
+                SetProperty(ref _webViewVisibility, value);
+            }
+        }
+
         private IWebViewService _webViewService;
         public IWebViewService WebViewService
         {
@@ -153,8 +184,14 @@ namespace App3.ViewModels
                 _webViewService = value;
                 _webViewService.NavigationComplete += WebViewService_NavigationComplete;
                 _webViewService.NavigationFailed += WebViewService_NavigationFailed;
-                //_webViewService.Navigate(Source);
             }
+        }
+
+        private ObservableCollection<Bookmark> _bookmarks;
+        public ObservableCollection<Bookmark> Bookmarks
+        {
+            get => _bookmarks;
+            set { SetProperty(ref _bookmarks, value); }
         }
 
         #endregion
@@ -169,19 +206,9 @@ namespace App3.ViewModels
         public DelegateCommand SearchTextBoxCommand { get; }
         public DelegateCommand AddToBookmarkCommand { get; }
         public DelegateCommand MenuFileSettingsCommand { get; }
-        public DelegateCommand OpenHistoryCommand { get; set; }
+        public DelegateCommand OpenHistoryCommand { get; }
+        public DelegateCommand<Bookmark> ItemClickCommand { get; set; }
 
-        #endregion
-
-        #region Event Aggregator
-
-        private void OpenBookmarkEvent_(Bookmark bookmark)
-        {
-            var currentView = SystemNavigationManager.GetForCurrentView();
-            currentView.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-            currentView.BackRequested -= BackToWebView;
-            WebHelper.Url = bookmark.Url;
-        }
 
         #endregion
 
@@ -196,7 +223,11 @@ namespace App3.ViewModels
         {
             if (!string.IsNullOrEmpty(Url))
             {
-                _webViewService?.Navigate(WebHelper.ValidURL(Url));
+                BookmarksVisibility = Visibility.Collapsed;
+                WebViewVisibility = Visibility.Visible;
+                var url = WebHelper.ValidURL(Url);
+                WebHelper.Url = Url;
+                WebViewSource = url;
             }
         }
 
@@ -211,18 +242,9 @@ namespace App3.ViewModels
 
         private void MenuViewsBookmarksCommand_()
         {
-            _menuNavigationService.UpdateView(PageTokens.BookmarksPage);
-            var currentView = SystemNavigationManager.GetForCurrentView();
-            currentView.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-            currentView.BackRequested += BackToWebView;
-        }
-
-        private void BackToWebView(object sender, BackRequestedEventArgs e)
-        {
-            _menuNavigationService.UpdateView(PageTokens.WebViewPage);
-            var currentView = SystemNavigationManager.GetForCurrentView();
-            currentView.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-            currentView.BackRequested -= BackToWebView;
+            Url = string.Empty;
+            BookmarksVisibility = Visibility.Visible;
+            WebViewVisibility = Visibility.Collapsed;
         }
 
         private void WebViewService_NavigationFailed(object sender, WebViewNavigationFailedEventArgs e)
@@ -261,6 +283,24 @@ namespace App3.ViewModels
         private void OnMenuFileSettings()
         {
             _eventAggregator.GetEvent<OpenRightMenuEvent>().Publish();
+        }
+
+        private void ItemClickCommand_(Bookmark bookmark)
+        {
+            IsLoading = true;
+            BookmarksVisibility = Visibility.Collapsed;
+            WebViewVisibility = Visibility.Visible;
+            WebHelper.Url = bookmark.Url;
+            WebViewSource = new Uri(bookmark.Url);
+        }
+
+        public void LoadBookmarks()
+        {
+            var data = BookmarkDataService.GetBookmarksData();
+            foreach (var item in data)
+            {
+                Bookmarks.Add(item);
+            }
         }
 
         #endregion

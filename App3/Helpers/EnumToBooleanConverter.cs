@@ -1,8 +1,7 @@
 ﻿using System;
-
 using Windows.UI.Xaml.Data;
 
-namespace App3.Helpers
+namespace UWPBrowser.Helpers
 {
     public class EnumToBooleanConverter : IValueConverter
     {

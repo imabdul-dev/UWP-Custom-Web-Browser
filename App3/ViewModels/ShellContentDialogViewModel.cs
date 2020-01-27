@@ -1,8 +1,6 @@
-﻿using System;
+﻿using Prism.Windows.Mvvm;
 
-using Prism.Windows.Mvvm;
-
-namespace App3.ViewModels
+namespace UWPBrowser.ViewModels
 {
     public class ShellContentDialogViewModel : ViewModelBase
     {

@@ -1,36 +1,37 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace App3.Helpers
+namespace UWPBrowser.Helpers
 {
     public static class WebHelper
     {
-        public static string Url { get; set; } = "https://developer.microsoft.com/en-us/windows/apps";
-        public static Uri ValidURL(string Url)
+        public static string Url { get; set; } = "https://www.google.com";
+
+        public static Uri ValidURL(string url)
         {
-            var Pattern = @"^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$";
+            const string Pattern = @"^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$";
             var Rgx = new Regex(Pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-            var result = Rgx.IsMatch(Url);
+            var result = Rgx.IsMatch(url);
 
             if (!result)
             {
-                return new Uri($"https://www.google.com/search?q={Url}");
+                return new Uri($"https://www.google.com/search?q={url}");
             }
 
-            if (Url.Length > 7)
+            if (url.Length > 7)
             {
-                var sub = Url.Substring(0, 7);
+                var sub = url.Substring(0, 7);
                 if (!sub.Contains("https://") && !sub.Contains("http://"))
                 {
-                    Url = $"http://{Url}";
+                    url = $"http://{url}";
                 }
             }
             else
             {
-                Url = $"http://{Url}";
+                url = $"http://{url}";
             }
 
-            return new Uri(Url);
+            return new Uri(url);
         }
     }
 }

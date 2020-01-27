@@ -1,5 +1,4 @@
-﻿using System;
-using Realms;
+﻿using Realms;
 
 namespace App3.Core.Models
 {

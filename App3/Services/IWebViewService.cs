@@ -1,7 +1,7 @@
 ﻿using System;
 using Windows.UI.Xaml.Controls;
 
-namespace App3.Services
+namespace UWPBrowser.Services
 {
     public interface IWebViewService
     {

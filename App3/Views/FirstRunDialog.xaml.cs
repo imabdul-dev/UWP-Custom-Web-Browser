@@ -1,8 +1,9 @@
 ﻿using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
-namespace App3.Views
+namespace UWPBrowser.Views
 {
-    public sealed partial class FirstRunDialog
+    public sealed partial class FirstRunDialog : ContentDialog
     {
         public FirstRunDialog()
         {

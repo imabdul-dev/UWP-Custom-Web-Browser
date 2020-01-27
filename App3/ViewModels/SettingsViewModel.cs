@@ -1,12 +1,12 @@
 ﻿using System.Threading.Tasks;
-using App3.Helpers;
-using App3.Services;
-using Prism.Commands;
-using Prism.Windows.Mvvm;
 using Windows.ApplicationModel;
 using Windows.UI.Xaml;
+using Prism.Commands;
+using Prism.Windows.Mvvm;
+using UWPBrowser.Helpers;
+using UWPBrowser.Services;
 
-namespace App3.ViewModels
+namespace UWPBrowser.ViewModels
 {
     public class SettingsViewModel : ViewModelBase
     {

@@ -2,19 +2,16 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace App3.Services
+namespace UWPBrowser.Services
 {
     public delegate void ViewClosedHandler(ViewLifetimeControl viewControl, EventArgs e);
 
-    // For instructions on using this service see https://github.com/Microsoft/WindowsTemplateStudio/blob/master/docs/features/multiple-views.md
-    // More details about showing multiple views at https://docs.microsoft.com/windows/uwp/design/layout/show-multiple-views
     public class WindowManagerService
     {
         private static WindowManagerService _current;
@@ -69,8 +66,7 @@ namespace App3.Services
                 viewControl = ViewLifetimeControl.CreateForCurrentView();
                 viewControl.Title = windowTitle;
                 viewControl.StartViewInUse();
-                var frame = new Frame();
-                frame.RequestedTheme = ThemeSelectorService.Theme;
+                var frame = new Frame {RequestedTheme = ThemeSelectorService.Theme};
                 frame.Navigate(pageType, viewControl);
                 Window.Current.Content = frame;
                 Window.Current.Activate();

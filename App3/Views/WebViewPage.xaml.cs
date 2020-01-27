@@ -1,11 +1,9 @@
-﻿using App3.Services;
-using App3.ViewModels;
+﻿using UWPBrowser.Services;
+using UWPBrowser.ViewModels;
 
-using Windows.UI.Xaml.Controls;
-
-namespace App3.Views
+namespace UWPBrowser.Views
 {
-    public sealed partial class WebViewPage : Page
+    public sealed partial class WebViewPage
     {
         private WebViewViewModel ViewModel => DataContext as WebViewViewModel;
 

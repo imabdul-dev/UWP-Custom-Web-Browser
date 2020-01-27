@@ -1,11 +1,9 @@
 ﻿using System;
-
-using App3.Helpers;
-
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
+using UWPBrowser.Helpers;
 
-namespace App3.Services
+namespace UWPBrowser.Services
 {
     // A custom event that fires whenever the secondary view is ready to be closed. You should
     // clean up any state (including deregistering for events) then close the window in this handler

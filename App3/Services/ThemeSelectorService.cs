@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-
-using App3.Helpers;
-
 using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
+using UWPBrowser.Helpers;
 
-namespace App3.Services
+namespace UWPBrowser.Services
 {
     public static class ThemeSelectorService
     {

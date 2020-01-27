@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Globalization;
 using System.Threading.Tasks;
-using App3.Services;
-using App3.Views;
-using Microsoft.Practices.Unity;
-using Prism.Mvvm;
-using Prism.Windows.AppModel;
-using Prism.Windows.Navigation;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using App3.Constants;
-using Realms;
+using Microsoft.Practices.Unity;
+using Prism.Mvvm;
+using Prism.Windows.AppModel;
+using Prism.Windows.Navigation;
+using UWPBrowser.Constants;
+using UWPBrowser.Services;
+using UWPBrowser.Views;
 
-namespace App3
+namespace UWPBrowser
 {
     [Windows.UI.Xaml.Data.Bindable]
     public sealed partial class App
@@ -28,7 +27,7 @@ namespace App3
         {
             // register a singleton using Container.RegisterType<IInterface, Type>(new ContainerControlledLifetimeManager());
             base.ConfigureContainer();
-            Container.RegisterType<IFirstRunDisplayService, FirstRunDisplayService>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<IFirstRunService, FirstRunService>(new ContainerControlledLifetimeManager());
             Container.RegisterInstance<IResourceLoader>(new ResourceLoaderAdapter(new ResourceLoader()));
             Container.RegisterType<IDialogService, DialogService>();
             Container.RegisterType<IMenuNavigationService, MenuNavigationService>();
@@ -46,7 +45,8 @@ namespace App3
             var menuNavigationService = Container.Resolve<IMenuNavigationService>();
             menuNavigationService.UpdateView(page, launchParam);
             Window.Current.Activate();
-            await Container.Resolve<IFirstRunDisplayService>().ShowIfAppropriateAsync();
+            await Container.Resolve<IFirstRunService>().RunIfAppropriateAsync();
+            await Task.CompletedTask;
         }
 
         protected override async Task OnActivateApplicationAsync(IActivatedEventArgs args)
@@ -63,7 +63,7 @@ namespace App3
             // gain better code reuse with other frameworks and pages within Windows Template Studio
             ViewModelLocationProvider.SetDefaultViewTypeToViewModelTypeResolver((viewType) =>
             {
-                var viewModelTypeName = string.Format(CultureInfo.InvariantCulture, "App3.ViewModels.{0}ViewModel, App3", viewType.Name.Substring(0, viewType.Name.Length - 4));
+                var viewModelTypeName = string.Format(CultureInfo.InvariantCulture, "UWPBrowser.ViewModels.{0}ViewModel, UWPBrowser", viewType.Name.Substring(0, viewType.Name.Length - 4));
                 return Type.GetType(viewModelTypeName);
             });
             await WindowManagerService.Current.InitializeAsync();

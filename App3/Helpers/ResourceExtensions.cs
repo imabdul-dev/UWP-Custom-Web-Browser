@@ -1,6 +1,6 @@
 ﻿using Windows.ApplicationModel.Resources;
 
-namespace App3.Helpers
+namespace UWPBrowser.Helpers
 {
     internal static class ResourceExtensions
     {

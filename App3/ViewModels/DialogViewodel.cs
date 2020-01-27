@@ -3,7 +3,7 @@ using App3.Core.Models;
 using App3.Core.Service;
 using Prism.Windows.Mvvm;
 
-namespace App3.ViewModels
+namespace UWPBrowser.ViewModels
 {
     public class DialogViewodel : ViewModelBase
     {

@@ -1,9 +1,9 @@
 ﻿using System;
-using App3.ViewModels;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Animation;
+using UWPBrowser.ViewModels;
 
-namespace App3.Views
+namespace UWPBrowser.Views
 {
     public sealed partial class ShellContentDialog
     {

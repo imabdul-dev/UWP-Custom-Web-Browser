@@ -7,12 +7,12 @@
     <ProjectGuid>{56A77813-692E-42B8-B45B-A0F243E701EE}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>App3</RootNamespace>
-    <AssemblyName>App3</AssemblyName>
+    <RootNamespace>UWPBrowser</RootNamespace>
+    <AssemblyName>UWPBrowser</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.18362.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.18362.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -148,9 +148,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Constants\PageTokens.cs" />
     <Compile Include="Services\DialogService.cs" />
-    <Compile Include="Services\FirstRunDisplayService.cs" />
+    <Compile Include="Services\FirstRunService.cs" />
     <Compile Include="Services\IDialogService.cs" />
-    <Compile Include="Services\IFirstRunDisplayService.cs" />
+    <Compile Include="Services\IFirstRunService.cs" />
     <Compile Include="Services\IMenuNavigationService.cs" />
     <Compile Include="Services\IWebViewService.cs" />
     <Compile Include="Services\MenuNavigationService.cs" />
@@ -158,15 +158,11 @@
     <Compile Include="Services\ViewLifetimeControl.cs" />
     <Compile Include="Services\WebViewService.cs" />
     <Compile Include="Services\WindowManagerService.cs" />
-    <Compile Include="ViewModels\BookmarksViewModel.cs" />
     <Compile Include="ViewModels\DialogViewodel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ShellContentDialogViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\WebViewViewModel.cs" />
-    <Compile Include="Views\BookmarksPage.xaml.cs">
-      <DependentUpon>BookmarksPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\DialogPage.xaml.cs">
       <DependentUpon>DialogPage.xaml</DependentUpon>
     </Compile>
@@ -207,10 +203,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\TextBlock.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\BookmarksPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -272,9 +264,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\App3.Core\App3.Core.csproj">
+    <ProjectReference Include="..\App3.Core\UWPBrowser.Core.csproj">
       <Project>{9A3018EF-F702-4CAE-AB3E-A71D97202C49}</Project>
-      <Name>App3.Core</Name>
+      <Name>UWPBrowser.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

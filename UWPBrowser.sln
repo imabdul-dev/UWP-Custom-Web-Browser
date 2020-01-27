@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App3", "App3\App3.csproj", "{56A77813-692E-42B8-B45B-A0F243E701EE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UWPBrowser", "App3\UWPBrowser.csproj", "{56A77813-692E-42B8-B45B-A0F243E701EE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App3.Core", "App3.Core\App3.Core.csproj", "{9A3018EF-F702-4CAE-AB3E-A71D97202C49}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UWPBrowser.Core", "App3.Core\UWPBrowser.Core.csproj", "{9A3018EF-F702-4CAE-AB3E-A71D97202C49}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
